@@ -3,6 +3,7 @@ from logging import Logger
 from config.ConfigManager import ConfigManager
 import os
 import util.WinUtil as WinUtil
+from util import DockerUtil
 
 
 class RedisPlugin(object):
@@ -39,14 +40,14 @@ class RedisPlugin(object):
         port = self.config.get_config('ats.redis.port')
         docker_cmd = 'docker run --name {} -p {}:6379 -d redis'.format(
             self.container_name, '6379' if not port else str(port))
-        out, err = WinUtil.exec_cmd(docker_cmd)  # 启动docker-redis
-        if len(out) == 65 and not len(err):
+        ok, msg = DockerUtil.docker_run(docker_cmd)
+        if ok:
             print('{} 启动成功'.format(self.container_name))
             self.logger.info('{} 启动成功'.format(self.container_name))
         else:
             print('{} 启动失败'.format(self.container_name))
-            print(err)
-            self.logger.error('{} 启动失败 {}'.format(self.container_name, err))
+            print(msg)
+            self.logger.error('{} 启动失败 {}'.format(self.container_name, msg))
         pass
 
     def start(self, args=None):
@@ -78,16 +79,11 @@ class RedisPlugin(object):
                 print('没有启动的redis进程')
 
     def stop_docker(self):
-        out, err = WinUtil.exec_cmd('docker stop {}'.format(self.container_name))
-        if out.startswith(self.container_name):
-            out, err = WinUtil.exec_cmd('docker rm {}'.format(self.container_name))
-            if out.startswith(self.container_name):
-                print('{} 关闭成功'.format(self.container_name))
-            else:
-                print('{} 关闭失败 {}'.format(self.container_name, err))
+        out = DockerUtil.docker_stop(self.container_name)
+        if out == self.container_name:
+            print('{} 关闭成功'.format(self.container_name))
         else:
-            print('{} 关闭失败 {}'.format(self.container_name, err))
-        pass
+            print('{} 关闭失败 {}'.format(self.container_name, out))
 
     def stop(self, args=None):
         if self.use_docker:
