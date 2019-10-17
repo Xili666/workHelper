@@ -1,0 +1,26 @@
+version: 1
+formatters:
+  default:
+    format: '%(asctime)s %(name)s %(levelname)s - %(message)s'
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: default
+  work_helper_debug:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    filename: log/work_helper-debug.log
+    formatter: default
+    maxBytes: 104857600
+    backupCount: 5
+  work_helper_warning:
+    class: logging.handlers.RotatingFileHandler
+    level: WARNING
+    filename: log/work_helper-warning.log
+    formatter: default
+    maxBytes: 104857600
+    backupCount: 5
+root:
+  level: DEBUG
+  handlers: [console,work_helper_debug,work_helper_warning]
