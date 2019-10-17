@@ -7,7 +7,7 @@ ats:
     # path: D:/devTool/Redis-x64-3.0.504
   zookeeper:
     # path: D:/devTool/zookeeper-3.3.6
-    port: 2182
+    port: 2181
     docker:
       enable: True
       containerName: yqats-zk
@@ -16,5 +16,5 @@ ats:
     dataSource:
       driverClassName: oracle.jdbc.driver.OracleDriver
       url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
-      username: jats005
+      username: jats003
       password: root
