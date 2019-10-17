@@ -1,6 +1,10 @@
 ats:
   redis:
-    path: D:/devTool/Redis-x64-3.0.504
+    docker:
+      useDocker: True
+      containerName: yqats-redis  # 容器名称
+      port: 6379
+  #    path: D:/devTool/Redis-x64-3.0.504
   zookeeper:
     path: D:/devTool/zookeeper-3.3.6
     port: 2181

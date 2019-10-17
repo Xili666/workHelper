@@ -75,11 +75,19 @@ def __runnable(process: subprocess.Popen, name, func, task_terminate_func, *args
 
 
 # 启动一个后台任务
-def run_task(name, command, func=log_runnable, task_terminate_func=None, *args, **kwargs):
+def run_task(name, command, func=log_runnable, task_terminate_func=None, shell=False, *args, **kwargs):
     logger.warning('执行系统命令: {}'.format(command))
-    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=shell)
     ProcessHandler.get_process_handler().put_process(name, p)  # 将进程统一管理
     thread = threading.Thread(target=__runnable, args=(p, name, func, task_terminate_func, *args, *kwargs))
     thread.setDaemon(True)  # 设置为守护线程, 在应用退出时不会阻塞
     thread.start()
     return p
+
+
+def exec_cmd(cmd, encoding='gbk'):
+    logger.warning('执行系统命令: {}'.format(cmd))
+    p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding=encoding)
+    logger.warning(p.stdout)
+    logger.error(p.stderr)
+    return p.stdout, p.stderr
