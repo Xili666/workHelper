@@ -36,7 +36,7 @@ class RedisPlugin(object):
             print('redis进程正在启动')
 
     def start_docker(self):
-        port = self.config.get_config('ats.redis.docker.port')
+        port = self.config.get_config('ats.redis.port')
         docker_cmd = 'docker run --name {} -p {}:6379 -d redis'.format(
             self.container_name, '6379' if not port else str(port))
         out, err = WinUtil.exec_cmd(docker_cmd)  # 启动docker-redis
