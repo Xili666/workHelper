@@ -11,6 +11,7 @@ class AtsPlugin(object):
         self.redis_plugin = self.pm.get_plugin('redis')
         self.zk_plugin = self.pm.get_plugin('zookeeper')
         self.uq_plugin = self.pm.get_plugin('uniqueCode')
+        self.cc_plugin = self.pm.get_plugin('configCenter')
         pass
 
     def start(self, args=None):
@@ -20,8 +21,10 @@ class AtsPlugin(object):
         self.redis_plugin.start()
         self.zk_plugin.start()
         self.uq_plugin.start()
+        self.cc_plugin.start()
 
     def stop(self, args=None):
         self.redis_plugin.stop()
         self.zk_plugin.stop()
         self.uq_plugin.stop()
+        self.cc_plugin.stop()

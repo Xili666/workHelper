@@ -3,7 +3,6 @@ from logging import Logger
 from config.ConfigManager import ConfigManager
 import os
 import util.WinUtil as WinUtil
-from util import DockerUtil
 
 
 class ConfigCenterPlugin(object):
@@ -24,8 +23,8 @@ class ConfigCenterPlugin(object):
     def start(self, args=None):
         print('正在启动Config Center')
         self.logger.info('正在启动Config Center')
-        os.system('{} cd {}/bin & {}/bin/startup.bat'.format(self.tomcat_path.split(':')[0],
-                                                             self.tomcat_path, self.tomcat_path))
+        os.system('{}: & cd {}/bin & {}/bin/startup.bat'.format(self.tomcat_path.split(':')[0],
+                                                                self.tomcat_path, self.tomcat_path))
 
     def stop(self, args=None):
         print('正在关闭Config Center')

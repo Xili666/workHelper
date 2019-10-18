@@ -16,8 +16,6 @@ ats:
     dataSource:
       driverClassName: oracle.jdbc.driver.OracleDriver
       url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
-      username: jats003
-      password: root
   configCenter:
     path: D:/devTool/apache-tomcat-7.0.85-config-center
     license:
