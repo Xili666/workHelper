@@ -18,3 +18,7 @@ ats:
       url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
       username: jats003
       password: root
+  configCenter:
+    path: D:/devTool/apache-tomcat-7.0.85-config-center
+    license:
+      path: D:/devTool/不受license控制

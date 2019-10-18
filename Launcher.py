@@ -24,6 +24,9 @@ def do_plugin(plugin: object, args: list):
         except AttributeError as err:
             logging.getLogger("logger").error(err)
             print('未知的参数: {}'.format(method_name))
+        except PermissionError as err:
+            logging.getLogger("logger").error(err)
+            print('拒绝访问: {}'.format(err.filename))
     else:
         print('缺少必要的参数')
     pass

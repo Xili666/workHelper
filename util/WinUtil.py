@@ -31,6 +31,7 @@ def get_port_pid(port: int):
         return None
 
 
+# 检查端口是否被占用
 def is_port_occupied(port: int, host='127.0.0.1'):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
@@ -45,13 +46,27 @@ def is_port_occupied(port: int, host='127.0.0.1'):
 # 根据命令行片段模糊匹配PID
 def get_commandline_pid(command: str):
     proc_id = list()
-    with os.popen("wmic process where \"caption = 'java.exe' and commandline like '%{}%'\" get processId".format(
-            command)) as o:
+    cmd = "wmic process where \"caption = 'java.exe' and commandline like '%{}%'\" get processId".format(
+        command.replace('/', '\\\\'))
+    logger.info('执行系统命令: {}'.format(cmd))
+    print('执行系统命令: {}'.format(cmd))
+    with os.popen(cmd) as o:
         for line in o:
             line = line.strip()
             if len(line) > 0 and line.isnumeric():
                 proc_id.append(line)
     return proc_id
+
+
+# 根据命令行的部分kill
+def kill_commandline(command: str):
+    for pid in get_commandline_pid(command):
+        cmd = 'taskkill /f /pid {}'.format(pid)
+        logger.warning('执行系统命令: {}'.format(cmd))
+        p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, encoding='gbk')
+        logger.info(p.stdout)
+        logger.error(p.stdout)
+    pass
 
 
 # 通用的日志打印函数, 将在任务执行时调用
