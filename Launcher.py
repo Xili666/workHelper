@@ -21,7 +21,8 @@ def do_plugin(plugin: object, args: list):
         try:
             method = getattr(plugin, method_name)
             method(args[1:])
-        except AttributeError:
+        except AttributeError as err:
+            logging.getLogger("logger").error(err)
             print('未知的参数: {}'.format(method_name))
     else:
         print('缺少必要的参数')

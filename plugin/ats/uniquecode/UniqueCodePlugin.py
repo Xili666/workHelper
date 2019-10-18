@@ -29,7 +29,7 @@ class UniqueCodePlugin(object):
 
     def db(self, args=None):
         for part in args:
-            kv = part.spilt('=', 1)
+            kv = part.split('=', 1)
             self.uq_data_source[kv[0]] = kv[1]
         doc = xml.dom.minidom.parse(self.uq_home + '/conf/applicationContext.xml')
         beans = doc.getElementsByTagName('beans')[0]
@@ -39,9 +39,12 @@ class UniqueCodePlugin(object):
                 prop_list = bean.getElementsByTagName('property')
                 for prop in prop_list:
                     prop_name = prop.getAttribute('name')
-                    if self.uq_data_source.get(prop_name) is not None:
+                    if self.uq_data_source.get(prop_name):
                         prop.setAttribute('value', self.uq_data_source[prop_name])
                 break
+        toxml = doc.toxml(encoding='utf-8')
+        with open(self.uq_home + '/conf/applicationContext.xml', 'w', encoding='utf-8') as f:
+            f.write(str(toxml, encoding='utf-8'))
         pass
 
     def start(self, args=None):
