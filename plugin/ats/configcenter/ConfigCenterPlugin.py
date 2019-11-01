@@ -21,8 +21,8 @@ class ConfigCenterPlugin(object):
         self.tomcat_path = self.config.get_config('ats.configCenter.path')
         self.config_path = os.path.join(self.tomcat_path, 'webapps/config-center-server/WEB-INF/classes')
 
-    def project(self, project_name: str):
-        project_config_file = os.path.join(self.config_path, 'common-config-{}.properties'.format(project_name))
+    def project(self, args='default'):
+        project_config_file = os.path.join(self.config_path, 'common-config-{}.properties'.format(args[0]))
         if os.path.exists(project_config_file):
             self.logger.warning('使用配置文件{}'.format(project_config_file))
             config_file = os.path.join(self.config_path, 'common-config.properties')
@@ -36,7 +36,7 @@ class ConfigCenterPlugin(object):
 
     def start(self, args=None):
         if args:
-            self.project(args[0])
+            self.project(args)
         print('正在启动Config Center')
         self.logger.info('正在启动Config Center')
         os.system('{}: & cd {}/bin & {}/bin/startup.bat'.format(self.tomcat_path.split(':')[0],
