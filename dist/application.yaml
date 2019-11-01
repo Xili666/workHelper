@@ -1,0 +1,22 @@
+ats:
+  redis:
+    docker:
+      useDocker: True
+      containerName: yqats-redis  # 容器名称
+    port: 6379
+    # path: D:/devTool/Redis-x64-3.0.504
+  zookeeper:
+    # path: D:/devTool/zookeeper-3.3.6
+    port: 2181
+    docker:
+      enable: True
+      containerName: yqats-zk
+  uniqueCode:
+    path: D:/devTool/uniquecode-server-1.0.6-190114
+    dataSource:
+      driverClassName: oracle.jdbc.driver.OracleDriver
+      url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
+  configCenter:
+    path: D:/devTool/apache-tomcat-7.0.85-config-center
+    license:
+      path: D:/devTool/不受license控制
