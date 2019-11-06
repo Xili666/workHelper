@@ -20,3 +20,5 @@ ats:
     path: D:/devTool/apache-tomcat-7.0.85-config-center
     license:
       path: D:/devTool/不受license控制
+  uc:
+    path: D:/devTool/svcFaceTool_jar_1.1.9
